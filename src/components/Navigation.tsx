@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
+import scriptWindLogo from "@/assets/script-wind-logo.webp";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -23,16 +35,24 @@ export const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-background/95 backdrop-blur-xl border-b border-primary/20 shadow-lg' 
+        : 'bg-background/80 backdrop-blur-md border-b border-border/50'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <button 
               onClick={() => scrollToSection('hero')}
-              className="text-2xl font-bold text-gradient hover:scale-105 transition-transform"
+              className="hover:scale-105 transition-transform"
             >
-              Script Wind
+              <img 
+                src={scriptWindLogo} 
+                alt="Script Wind" 
+                className="h-16 w-auto"
+              />
             </button>
           </div>
 
@@ -43,16 +63,35 @@ export const Navigation = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-foreground/80 hover:text-foreground hover:text-gradient transition-all duration-200 px-3 py-2 text-sm font-medium"
+                  className="text-foreground/80 hover:text-primary transition-all duration-200 px-3 py-2 text-sm font-medium relative group"
                 >
                   {item.label}
+                  <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-[calc(100%-24px)]" />
                 </button>
               ))}
+              
+              {/* Theme Toggle */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 ml-4"
+              >
+                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              </Button>
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button and theme toggle */}
+          <div className="md:hidden flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2"
+            >
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </Button>
             <Button
               variant="ghost"
               size="sm"
@@ -67,17 +106,43 @@ export const Navigation = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background/95 backdrop-blur-md border-b border-border/50">
-            {menuItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-foreground/80 hover:text-foreground hover:text-gradient block px-3 py-2 text-base font-medium w-full text-left transition-all duration-200"
-              >
-                {item.label}
-              </button>
-            ))}
+        <div className="md:hidden fixed inset-0 top-0 z-50 animate-slide-in-right">
+          <div className="absolute inset-0 bg-background/98 backdrop-blur-xl border-r border-primary/20">
+            <div className="h-full flex flex-col justify-start items-center pt-24 space-y-8 px-8">
+              {/* Close button */}
+              <div className="absolute top-6 right-6">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 text-foreground hover:text-primary"
+                >
+                  <X size={24} />
+                </Button>
+              </div>
+              
+              {/* Logo */}
+              <div className="animate-fade-in mb-4">
+                <img 
+                  src={scriptWindLogo} 
+                  alt="Script Wind" 
+                  className="h-16 w-auto"
+                />
+              </div>
+              
+              {/* Menu Items */}
+              {menuItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-2xl font-semibold text-foreground hover:text-primary transition-all duration-300 hover:scale-105 animate-fade-in relative group py-3"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}

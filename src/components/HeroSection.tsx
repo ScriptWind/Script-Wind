@@ -1,25 +1,26 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
-import heroVideoBackground from "@/assets/hero-video-bg.jpg";
+import { ArrowRight } from "lucide-react";
 export const HeroSection = () => {
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
-        <img src={heroVideoBackground} alt="Tech background" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+          <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-background/70 backdrop-blur-sm" />
         <div className="absolute inset-0 tech-gradient-subtle" />
       </div>
 
       {/* Floating Elements */}
       <div className="absolute inset-0 z-10">
-        <div className="absolute top-20 left-10 w-4 h-4 bg-tech-cyan rounded-full animate-float opacity-60" />
-        <div className="absolute top-40 right-20 w-3 h-3 bg-tech-blue rounded-full animate-float opacity-40" style={{
+        <div className="absolute top-20 left-10 w-4 h-4 bg-primary rounded-full animate-float opacity-60" />
+        <div className="absolute top-40 right-20 w-3 h-3 bg-primary rounded-full animate-float opacity-40" style={{
         animationDelay: '1s'
       }} />
-        <div className="absolute bottom-40 left-1/4 w-2 h-2 bg-tech-purple rounded-full animate-float opacity-50" style={{
+        <div className="absolute bottom-40 left-1/4 w-2 h-2 bg-primary rounded-full animate-float opacity-50" style={{
         animationDelay: '2s'
       }} />
-        <div className="absolute bottom-60 right-1/3 w-5 h-5 bg-accent rounded-full animate-float opacity-30" style={{
+        <div className="absolute bottom-60 right-1/3 w-5 h-5 bg-primary rounded-full animate-float opacity-30" style={{
         animationDelay: '0.5s'
       }} />
       </div>
@@ -28,7 +29,12 @@ export const HeroSection = () => {
       <div className="relative z-20 text-center px-4 max-w-6xl mx-auto">
         {/* Logo */}
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-6xl md:text-8xl font-bold text-gradient mb-4">Where ideas catch wind</h1>
+          <h1 className="text-6xl md:text-8xl font-bold text-gradient mb-4 uppercase tracking-wide">
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.1s' }}>WHERE</span>{' '}
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.3s' }}>IDEAS</span>{' '}
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.5s' }}>CATCH</span>{' '}
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.7s' }}>WIND</span>
+          </h1>
           <div className="h-1 w-32 tech-gradient mx-auto rounded-full shadow-glow-primary" />
         </div>
 
@@ -44,38 +50,10 @@ export const HeroSection = () => {
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in" style={{
-        animationDelay: '0.9s'
-      }}>
-          <Button variant="hero" size="xl" className="group">
-            Get Started
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          
-          
-        </div>
+        
 
         {/* Stats */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-in" style={{
-        animationDelay: '1.2s'
-      }}>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">50+</div>
-            <div className="text-sm text-muted-foreground">Projects Delivered</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">3+</div>
-            <div className="text-sm text-muted-foreground">Years Experience</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">24/7</div>
-            <div className="text-sm text-muted-foreground">Support</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">100%</div>
-            <div className="text-sm text-muted-foreground">Client Satisfaction</div>
-          </div>
-        </div>
+        
       </div>
 
       {/* Scroll Indicator */}
