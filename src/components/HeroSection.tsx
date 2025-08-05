@@ -56,26 +56,7 @@ export const HeroSection = () => {
         </div>
 
         {/* Stats */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-in" style={{
-        animationDelay: '1.2s'
-      }}>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">50+</div>
-            <div className="text-sm text-muted-foreground">Projects Delivered</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">3+</div>
-            <div className="text-sm text-muted-foreground">Years Experience</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">24/7</div>
-            <div className="text-sm text-muted-foreground">Support</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">100%</div>
-            <div className="text-sm text-muted-foreground">Client Satisfaction</div>
-          </div>
-        </div>
+        
       </div>
 
       {/* Scroll Indicator */}
