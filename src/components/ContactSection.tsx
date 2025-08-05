@@ -133,9 +133,9 @@ export const ContactSection = () => {
 
             {/* Why Choose Us */}
             <ScrollAnimation animationType="fade-right" delay={200}>
-              <Card className="hover-lift bg-tech-gradient border-0 text-white hover:shadow-glow-primary/50 transition-all duration-500">
+              <Card className="glass-card hover:shadow-glow-primary/50 transition-all duration-500 border border-primary/20">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-6">Why Choose Script Wind?</h3>
+                <h3 className="text-3xl font-bold mb-6 text-gradient">Why Choose Script Wind?</h3>
                 <ul className="space-y-4">
                   {[
                     "Fast turnaround times",
@@ -145,8 +145,8 @@ export const ContactSection = () => {
                     "Scalable solutions"
                   ].map((item, index) => (
                     <li key={item} className="flex items-center space-x-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                      <CheckCircle className="w-5 h-5 text-tech-cyan flex-shrink-0" />
-                      <span>{item}</span>
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span className="text-muted-foreground">{item}</span>
                     </li>
                   ))}
                 </ul>
