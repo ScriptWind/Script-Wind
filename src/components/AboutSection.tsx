@@ -63,12 +63,12 @@ export const AboutSection = () => {
         <ScrollAnimation animationType="scale-in" className="text-center mb-20">
           <Card className="max-w-4xl mx-auto bg-tech-gradient p-12 border-0 shadow-glow-primary hover:shadow-glow-primary/80 transition-all duration-500 hover:scale-105">
             <div className="text-white">
-              <AnimatedText animationType="slide-up-words" className="text-3xl font-bold mb-6">
+              <AnimatedText animationType="slide-up-words" className="text-3xl font-bold mb-6 text-white">
                 Our Mission
               </AnimatedText>
-              <p className="text-xl leading-relaxed opacity-90 text-slate-800">
+              <p className="text-xl leading-relaxed text-white/90">
                 To turn your vision into a reliable, scalable, and beautifully built product — fast and professionally. 
-                We combine <strong>clean code</strong>, <strong>bold ideas</strong>, and a <strong>user-first mindset</strong> to deliver results that truly make an impact.
+                We combine <strong className="text-white font-bold">clean code</strong>, <strong className="text-white font-bold">bold ideas</strong>, and a <strong className="text-white font-bold">user-first mindset</strong> to deliver results that truly make an impact.
               </p>
             </div>
           </Card>
