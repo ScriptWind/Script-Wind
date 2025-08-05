@@ -66,7 +66,7 @@ export const AboutSection = () => {
               <AnimatedText animationType="slide-up-words" className="text-3xl font-bold mb-6">
                 Our Mission
               </AnimatedText>
-              <p className="text-xl leading-relaxed opacity-90">
+              <p className="text-xl leading-relaxed opacity-90 text-slate-800">
                 To turn your vision into a reliable, scalable, and beautifully built product — fast and professionally. 
                 We combine <strong>clean code</strong>, <strong>bold ideas</strong>, and a <strong>user-first mindset</strong> to deliver results that truly make an impact.
               </p>
@@ -82,12 +82,7 @@ export const AboutSection = () => {
             </AnimatedText>
           </ScrollAnimation>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <ScrollAnimation 
-                key={value.title}
-                animationType="fade-up"
-                delay={index * 150}
-              >
+            {values.map((value, index) => <ScrollAnimation key={value.title} animationType="fade-up" delay={index * 150}>
                 <Card className="text-center hover-lift group hover:shadow-glow-primary/50 transition-all duration-500 hover:scale-105">
                   <CardHeader>
                     <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-tech-gradient flex items-center justify-center shadow-glow-primary group-hover:shadow-glow-primary/80 group-hover:scale-110 transition-all duration-300">
@@ -99,8 +94,7 @@ export const AboutSection = () => {
                     <p className="text-muted-foreground group-hover:text-foreground transition-all duration-300">{value.description}</p>
                   </CardContent>
                 </Card>
-              </ScrollAnimation>
-            ))}
+              </ScrollAnimation>)}
           </div>
         </div>
 
