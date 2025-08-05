@@ -180,7 +180,7 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center">
           <ScrollAnimation animationType="fade-up" delay={500}>
-            <p className="text-muted-foreground text-center md:text-left">© 2024 Script Wind. All rights reserved. </p>
+            <p className="text-muted-foreground text-center md:text-left">© 2025 Script Wind. All rights reserved. </p>
           </ScrollAnimation>
           
           <ScrollAnimation animationType="fade-up" delay={600}>
