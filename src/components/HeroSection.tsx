@@ -5,7 +5,16 @@ export const HeroSection = () => {
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
-        <img src={heroVideoBackground} alt="Tech background" className="w-full h-full object-cover" />
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+          <img src={heroVideoBackground} alt="Tech background" className="w-full h-full object-cover" />
+        </video>
         <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
         <div className="absolute inset-0 tech-gradient-subtle" />
       </div>
