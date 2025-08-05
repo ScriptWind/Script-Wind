@@ -9,14 +9,15 @@ interface ProjectDetails {
   title: string;
   category: string;
   description: string;
-  fullDescription: string;
-  images: string[];
-  tags: string[];
+  fullDescription?: string;
+  image?: string;
+  images?: string[];
+  tags?: string[];
   liveUrl?: string;
   githubUrl?: string;
-  features: string[];
-  challenges: string[];
-  technologies: string[];
+  features?: string[];
+  challenges?: string[];
+  technologies?: string[];
 }
 
 interface PortfolioModalProps {
@@ -45,7 +46,7 @@ export const PortfolioModal = ({ project, isOpen, onClose }: PortfolioModalProps
           <div className="relative">
             <Carousel className="w-full">
               <CarouselContent>
-                {project.images.map((image, index) => (
+                {(project.images || [project.image || "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop"]).map((image, index) => (
                   <CarouselItem key={index}>
                     <div className="relative h-96 rounded-xl overflow-hidden">
                       <img
@@ -69,14 +70,14 @@ export const PortfolioModal = ({ project, isOpen, onClose }: PortfolioModalProps
               <div>
                 <h3 className="text-xl font-semibold mb-3">Project Overview</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {project.fullDescription}
+                  {project.fullDescription || project.description}
                 </p>
               </div>
 
               <div>
                 <h3 className="text-xl font-semibold mb-3">Key Features</h3>
                 <ul className="space-y-2">
-                  {project.features.map((feature, index) => (
+                  {(project.features || ["Advanced functionality", "Responsive design", "User-friendly interface", "Scalable architecture"]).map((feature, index) => (
                     <li key={index} className="flex items-start space-x-2">
                       <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
                       <span className="text-muted-foreground">{feature}</span>
@@ -88,7 +89,7 @@ export const PortfolioModal = ({ project, isOpen, onClose }: PortfolioModalProps
               <div>
                 <h3 className="text-xl font-semibold mb-3">Challenges & Solutions</h3>
                 <ul className="space-y-2">
-                  {project.challenges.map((challenge, index) => (
+                  {(project.challenges || ["Optimizing performance for better user experience", "Implementing responsive design across devices", "Ensuring security and data protection", "Creating intuitive user workflows"]).map((challenge, index) => (
                     <li key={index} className="flex items-start space-x-2">
                       <span className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0" />
                       <span className="text-muted-foreground">{challenge}</span>
@@ -102,7 +103,7 @@ export const PortfolioModal = ({ project, isOpen, onClose }: PortfolioModalProps
               <div>
                 <h3 className="text-xl font-semibold mb-3">Technologies Used</h3>
                 <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
+                  {(project.technologies || project.tags || []).map((tech) => (
                     <Badge key={tech} variant="outline">
                       {tech}
                     </Badge>
@@ -113,7 +114,7 @@ export const PortfolioModal = ({ project, isOpen, onClose }: PortfolioModalProps
               <div>
                 <h3 className="text-xl font-semibold mb-3">Tech Stack</h3>
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
+                  {(project.tags || []).map((tag) => (
                     <Badge key={tag} variant="secondary">
                       {tag}
                     </Badge>
