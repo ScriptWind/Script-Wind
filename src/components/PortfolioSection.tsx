@@ -153,9 +153,6 @@ export const PortfolioSection = () => {
                 View Full Portfolio
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button variant="outline" size="xl">
-                Schedule a Consultation
-              </Button>
             </div>
           </Card>
         </ScrollAnimation>

@@ -42,7 +42,7 @@ export const AnimatedText = ({
     <div 
       ref={ref} 
       className={`${getAnimationClasses()} ${className} leading-tight`}
-      style={{ animationDelay: `${delay}ms`, lineHeight: '1.1' }}
+      style={{ animationDelay: `${delay}ms`, lineHeight: '2' }}
     >
       {children}
     </div>

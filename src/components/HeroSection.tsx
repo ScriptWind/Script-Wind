@@ -5,28 +5,14 @@ export const HeroSection = () => {
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-          <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761" type="video/mp4" />
+          <source src="/Compress background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-background/70 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-background/90 backdrop-blur-sm" />
         <div className="absolute inset-0 tech-gradient-subtle" />
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute inset-0 z-10">
-        <div className="absolute top-20 left-10 w-4 h-4 bg-primary rounded-full animate-float opacity-60" />
-        <div className="absolute top-40 right-20 w-3 h-3 bg-primary rounded-full animate-float opacity-40" style={{
-        animationDelay: '1s'
-      }} />
-        <div className="absolute bottom-40 left-1/4 w-2 h-2 bg-primary rounded-full animate-float opacity-50" style={{
-        animationDelay: '2s'
-      }} />
-        <div className="absolute bottom-60 right-1/3 w-5 h-5 bg-primary rounded-full animate-float opacity-30" style={{
-        animationDelay: '0.5s'
-      }} />
-      </div>
-
       {/* Content */}
-      <div className="relative z-20 text-center px-4 max-w-6xl mx-auto">
+      <div className="relative z-30 text-center px-4 max-w-6xl mx-auto">
         {/* Logo */}
         <div className="mb-8 animate-fade-in">
           <h1 className="text-6xl md:text-8xl font-bold text-gradient mb-4 uppercase tracking-wide">
@@ -42,8 +28,8 @@ export const HeroSection = () => {
         
 
         {/* Description */}
-        <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in" style={{
-        animationDelay: '0.6s'
+        <p className="text-lg md:text-xl  max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in" style={{
+        animationDelay: '0.6s', 
       }}>
           We build powerful digital solutions that help businesses grow. From scalable mobile apps to high-performance websites, 
           we turn your vision into reality with cutting-edge technology and creative excellence.

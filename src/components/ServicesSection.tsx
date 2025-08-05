@@ -108,10 +108,8 @@ export const ServicesSection = () => {
                 {/* Service Image with Overlay */}
                 <div className="relative h-64 rounded-lg overflow-hidden">
                   <img src={selectedService.image} alt={selectedService.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-background/40" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <selectedService.icon className="w-16 h-16 text-primary" />
-                  </div>
+                  <div className="absolute inset-0 " />
+                 
                 </div>
 
                 {/* Full Description */}
@@ -133,17 +131,7 @@ export const ServicesSection = () => {
                   </div>
                 </div>
 
-                {/* CTA */}
-                <div className="pt-6 border-t">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button size="lg" className="flex-1">
-                      Start Your Project
-                    </Button>
-                    <Button variant="outline" size="lg" className="flex-1">
-                      Schedule Consultation
-                    </Button>
-                  </div>
-                </div>
+          
               </div>
             </>}
         </DialogContent>

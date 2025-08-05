@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import scriptWindLogo from "@/assets/script-wind-logo.webp";
+import coloredLogo from "@/assets/Script Wind Logo Color and Black -  Transparent Background.png";
+import whiteLogo from "@/assets/Script Wind Logo Only White -  Transparent Background.png";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,6 +36,18 @@ export const Navigation = () => {
     { label: "Contact", id: "contact" },
   ];
 
+  // Conditional logo rendering based on theme
+  const renderLogo = () => {
+    const logoSrc = theme === "dark" ? whiteLogo : coloredLogo;
+    return (
+      <img 
+        src={logoSrc} 
+        alt="Script Wind" 
+        className="h-16 w-auto"
+      />
+    );
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
@@ -46,13 +60,9 @@ export const Navigation = () => {
           <div className="flex-shrink-0">
             <button 
               onClick={() => scrollToSection('hero')}
-              className="hover:scale-105 transition-transform"
+              className="hover:scale-105 transition-transform p-2 rounded-lg"
             >
-              <img 
-                src={scriptWindLogo} 
-                alt="Script Wind" 
-                className="h-16 w-auto"
-              />
+              {renderLogo()}
             </button>
           </div>
 
@@ -107,7 +117,11 @@ export const Navigation = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 top-0 z-50 animate-slide-in-right">
-          <div className="absolute inset-0 bg-background/95 backdrop-blur-2xl border-r border-primary/30 shadow-2xl">
+          <div className={`absolute inset-0 backdrop-blur-2xl border-r border-primary/30 shadow-2xl ${
+            theme === "dark" 
+              ? 'bg-slate-900/95' 
+              : 'bg-white/95'
+          }`}>
             <div className="h-full flex flex-col justify-start items-center pt-20 space-y-6 px-8">
               {/* Close button */}
               <div className="absolute top-6 right-6">
@@ -122,26 +136,29 @@ export const Navigation = () => {
               </div>
               
               {/* Logo */}
-              <div className="animate-fade-in mb-4">
-                <img 
-                  src={scriptWindLogo} 
-                  alt="Script Wind" 
-                  className="h-16 w-auto"
-                />
-              </div>
+             
               
               {/* Menu Items */}
-              {menuItems.map((item, index) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-2xl font-semibold text-foreground hover:text-primary transition-all duration-300 hover:scale-105 animate-fade-in relative group py-3"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
-                </button>
-              ))}
+              <div className={`w-full rounded-lg p-6 al ${
+                theme === "dark" 
+                  ? 'bg-slate-800' 
+                  : 'bg-gray-100'
+              }`}>
+               <div className="animate-fade-in mb-4 flex justify-center items-center">
+                {renderLogo()}
+              </div>
+                {menuItems.map((item, index) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="text-2xl font-semibold text-foreground hover:text-primary transition-all duration-300 hover:scale-105 animate-fade-in relative group py-3 w-full text-center"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    {item.label}
+                    <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>

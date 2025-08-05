@@ -78,7 +78,7 @@ export const ContactSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <ScrollAnimation animationType="fade-up" className="text-center mb-16">
-          <AnimatedText animationType="typewriter" className="text-5xl md:text-6xl font-bold mb-6">
+          <AnimatedText animationType="typewriter" className="text-5xl md:text-6xl font-bold mb-6 ">
             Let's Build Together
           </AnimatedText>
           <ScrollAnimation animationType="fade-up" delay={200}>
@@ -104,7 +104,7 @@ export const ContactSection = () => {
                   </div>
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-muted-foreground">hello@scriptwind.com</p>
+                    <p className="text-muted-foreground">developer@scriptwind.com</p>
                   </div>
                 </div>
                 
@@ -114,7 +114,7 @@ export const ContactSection = () => {
                   </div>
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-muted-foreground">+1 (555) 123-WIND</p>
+                    <p className="text-muted-foreground">+94 70 301 1048</p>
                   </div>
                 </div>
                 
