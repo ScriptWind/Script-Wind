@@ -38,9 +38,7 @@ const services = [{
 }];
 export const ServicesSection = () => {
   const [selectedService, setSelectedService] = useState<typeof services[0] | null>(null);
-
-  return (
-    <section className="py-24 px-4 relative overflow-hidden" id="services">
+  return <section className="py-24 px-4 relative overflow-hidden" id="services">
       {/* Background Elements */}
       <div className="absolute inset-0 tech-gradient-subtle opacity-50" />
       
@@ -58,20 +56,13 @@ export const ServicesSection = () => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {services.map((service, index) => (
-            <Card 
-              key={service.title} 
-              className="group hover:scale-105 hover:shadow-glow-primary transition-all duration-500 animate-fade-in cursor-pointer"
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
+          {services.map((service, index) => <Card key={service.title} className="group hover:scale-105 hover:shadow-glow-primary transition-all duration-500 animate-fade-in cursor-pointer" style={{
+          animationDelay: `${index * 0.2}s`
+        }}>
               <CardHeader className="relative">
                 {/* Service Image */}
                 <div className="w-full h-48 rounded-lg overflow-hidden mb-6">
-                  <img 
-                    src={service.image} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" 
-                  />
+                  <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 
@@ -84,43 +75,28 @@ export const ServicesSection = () => {
               <CardContent>
                 {/* Features List */}
                 <ul className="space-y-3 mb-6">
-                  {service.features.slice(0, 4).map(feature => (
-                    <li key={feature} className="flex items-center text-sm text-muted-foreground">
+                  {service.features.slice(0, 4).map(feature => <li key={feature} className="flex items-center text-sm text-muted-foreground">
                       <div className="w-2 h-2 bg-primary rounded-full mr-3 flex-shrink-0" />
                       {feature}
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
                 
-                <Button 
-                  variant="outline" 
-                  className="w-full group hover:bg-primary hover:text-primary-foreground border-primary/50"
-                  onClick={() => setSelectedService(service)}
-                >
+                <Button variant="outline" className="w-full group hover:bg-primary hover:text-primary-foreground border-primary/50" onClick={() => setSelectedService(service)}>
                   Learn More
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
 
         {/* CTA Section */}
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-4">Ready to Start Your Project?</h3>
-          <p className="text-muted-foreground mb-8">Let's discuss your vision and turn it into reality</p>
-          <Button size="lg" className="group">
-            Get Started Today
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </div>
+        
       </div>
 
       {/* Service Modal */}
       <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          {selectedService && (
-            <>
+          {selectedService && <>
               <DialogHeader>
                 <DialogTitle className="text-3xl text-gradient mb-4">
                   {selectedService.title}
@@ -131,11 +107,7 @@ export const ServicesSection = () => {
               <div className="space-y-6">
                 {/* Service Image with Overlay */}
                 <div className="relative h-64 rounded-lg overflow-hidden">
-                  <img 
-                    src={selectedService.image} 
-                    alt={selectedService.title}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={selectedService.image} alt={selectedService.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-background/40" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <selectedService.icon className="w-16 h-16 text-primary" />
@@ -154,12 +126,10 @@ export const ServicesSection = () => {
                 <div>
                   <h4 className="text-xl font-semibold mb-4">What's Included</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {selectedService.features.map(feature => (
-                      <div key={feature} className="flex items-center space-x-3">
+                    {selectedService.features.map(feature => <div key={feature} className="flex items-center space-x-3">
                         <div className="w-3 h-3 bg-primary rounded-full flex-shrink-0" />
                         <span className="text-muted-foreground">{feature}</span>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </div>
 
@@ -175,10 +145,8 @@ export const ServicesSection = () => {
                   </div>
                 </div>
               </div>
-            </>
-          )}
+            </>}
         </DialogContent>
       </Dialog>
-    </section>
-  );
+    </section>;
 };
