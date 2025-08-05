@@ -78,9 +78,9 @@ export const ContactSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <ScrollAnimation animationType="fade-up" className="text-center mb-16">
-          <AnimatedText animationType="typewriter" className="text-5xl md:text-6xl font-bold mb-6 ">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 ">
             Let's Build Together
-          </AnimatedText>
+          </h1>
           <ScrollAnimation animationType="fade-up" delay={200}>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Ready to transform your ideas into powerful digital solutions? 

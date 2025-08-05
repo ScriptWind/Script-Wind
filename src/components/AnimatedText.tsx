@@ -41,10 +41,10 @@ export const AnimatedText = ({
   return (
     <div 
       ref={ref} 
-      className={`${getAnimationClasses()} ${className} leading-tight sm:leading-normal px-2 sm:px-4 text-center sm:text-left`}
+      className={`${getAnimationClasses()} ${className} text-center leading-tight sm:leading-normal px-2 sm:px-4`}
       style={{ 
-        animationDelay: `${delay}ms`, 
-        lineHeight: window.innerWidth < 640 ? '1.4' : '2' 
+        animationDelay: `${delay}ms`,
+        lineHeight: window.innerWidth < 640 ? '1.4' : '2'
       }}
     >
       {children}
