@@ -54,7 +54,7 @@ export const TechStackSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold text-gradient mb-6 leading-tight">
             Technology Stack
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -74,7 +74,7 @@ export const TechStackSection = () => {
               {technologies.map((tech, index) => (
                 <div
                   key={`first-${tech.name}-${index}`}
-                  className="flex-shrink-0 flex flex-col items-center justify-center w-32 h-32 bg-card rounded-xl border shadow-elevated hover:shadow-glow-primary transition-smooth hover:scale-105 group"
+                  className="flex-shrink-0 flex flex-col items-center justify-center w-32 h-32 glass-card border border-primary/20 hover:shadow-glow-primary hover:scale-110 transition-all duration-500 group"
                 >
                   <div className="text-4xl mb-2 group-hover:animate-bounce">{tech.logo}</div>
                   <div className="text-sm font-medium text-center group-hover:text-gradient transition-smooth">
@@ -87,7 +87,7 @@ export const TechStackSection = () => {
               {technologies.map((tech, index) => (
                 <div
                   key={`second-${tech.name}-${index}`}
-                  className="flex-shrink-0 flex flex-col items-center justify-center w-32 h-32 bg-card rounded-xl border shadow-elevated hover:shadow-glow-primary transition-smooth hover:scale-105 group"
+                  className="flex-shrink-0 flex flex-col items-center justify-center w-32 h-32 glass-card border border-primary/20 hover:shadow-glow-primary hover:scale-110 transition-all duration-500 group"
                 >
                   <div className="text-4xl mb-2 group-hover:animate-bounce">{tech.logo}</div>
                   <div className="text-sm font-medium text-center group-hover:text-gradient transition-smooth">

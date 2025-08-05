@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 import scriptWindLogo from "@/assets/script-wind-logo.webp";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +51,7 @@ export const Navigation = () => {
               <img 
                 src={scriptWindLogo} 
                 alt="Script Wind" 
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               />
             </button>
           </div>
@@ -67,11 +69,29 @@ export const Navigation = () => {
                   <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-[calc(100%-24px)]" />
                 </button>
               ))}
+              
+              {/* Theme Toggle */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 ml-4"
+              >
+                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              </Button>
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button and theme toggle */}
+          <div className="md:hidden flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2"
+            >
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </Button>
             <Button
               variant="ghost"
               size="sm"
@@ -86,24 +106,42 @@ export const Navigation = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-20 z-40 animate-slide-in-right">
-          <div className="absolute inset-0 bg-background/95 backdrop-blur-xl">
-            <div className="h-full flex flex-col justify-center items-center space-y-8 px-8">
+        <div className="md:hidden fixed inset-0 top-0 z-50 animate-slide-in-right">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background/95 to-tech-purple/20 backdrop-blur-xl">
+            <div className="h-full flex flex-col justify-center items-center space-y-12 px-8">
+              {/* Close button */}
+              <div className="absolute top-6 right-6">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 text-white hover:text-primary"
+                >
+                  <X size={24} />
+                </Button>
+              </div>
+              
+              {/* Logo */}
+              <div className="animate-fade-in">
+                <img 
+                  src={scriptWindLogo} 
+                  alt="Script Wind" 
+                  className="h-20 w-auto"
+                />
+              </div>
+              
+              {/* Menu Items */}
               {menuItems.map((item, index) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-2xl font-bold text-foreground/80 hover:text-gradient transition-all duration-300 hover:scale-110 animate-fade-in"
+                  className="text-3xl font-bold text-foreground hover:text-primary transition-all duration-300 hover:scale-110 animate-fade-in relative group"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {item.label}
+                  <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
                 </button>
               ))}
-              <div className="flex space-x-4 mt-8">
-                <Button variant="hero" size="lg" className="animate-bounce">
-                  Get Started
-                </Button>
-              </div>
             </div>
           </div>
         </div>

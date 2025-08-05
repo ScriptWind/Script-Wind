@@ -130,6 +130,10 @@ export default {
 				'typewriter': {
 					'0%': { width: '0' },
 					'100%': { width: '100%' }
+				},
+				'scroll-horizontal': {
+					'0%': { transform: 'translateX(0%)' },
+					'100%': { transform: 'translateX(-50%)' }
 				}
 			},
 			animation: {

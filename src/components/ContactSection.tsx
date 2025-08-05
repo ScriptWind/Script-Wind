@@ -93,9 +93,9 @@ export const ContactSection = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <ScrollAnimation animationType="fade-right">
-              <Card className="hover-lift hover:shadow-glow-primary/30 transition-all duration-500">
+              <Card className="glass-card hover:shadow-glow-primary/50 transition-all duration-500 border border-primary/20">
               <CardHeader>
-                <CardTitle className="text-2xl">Get In Touch</CardTitle>
+                <CardTitle className="text-3xl font-bold text-gradient">Get In Touch</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-center space-x-4">
@@ -157,9 +157,9 @@ export const ContactSection = () => {
 
           {/* Contact Form */}
           <ScrollAnimation animationType="fade-left">
-            <Card className="hover-lift hover:shadow-glow-primary/30 transition-all duration-500">
+            <Card className="glass-card hover:shadow-glow-primary/50 transition-all duration-500 border border-primary/20">
             <CardHeader>
-              <CardTitle className="text-2xl">Start Your Project</CardTitle>
+              <CardTitle className="text-3xl font-bold text-gradient">Start Your Project</CardTitle>
             </CardHeader>
             <CardContent>
               {isSubmitted ? (
@@ -180,7 +180,7 @@ export const ContactSection = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50 group relative"
+                        className="border-muted-foreground/30 focus:border-primary focus:shadow-glow-primary transition-all duration-300 dark:border-muted-foreground/30"
                       />
                     </div>
                     <div className="space-y-2">
@@ -193,7 +193,7 @@ export const ContactSection = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
+                        className="border-muted-foreground/30 focus:border-primary focus:shadow-glow-primary transition-all duration-300 dark:border-muted-foreground/30"
                       />
                     </div>
                   </div>
@@ -207,7 +207,7 @@ export const ContactSection = () => {
                         placeholder="Your Company"
                         value={formData.company}
                         onChange={handleInputChange}
-                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
+                        className="border-muted-foreground/30 focus:border-primary focus:shadow-glow-primary transition-all duration-300 dark:border-muted-foreground/30"
                       />
                     </div>
                     <div className="space-y-2">
@@ -218,7 +218,7 @@ export const ContactSection = () => {
                         placeholder="Mobile App, Website, CRM..."
                         value={formData.project}
                         onChange={handleInputChange}
-                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
+                        className="border-muted-foreground/30 focus:border-primary focus:shadow-glow-primary transition-all duration-300 dark:border-muted-foreground/30"
                       />
                     </div>
                   </div>
@@ -233,7 +233,7 @@ export const ContactSection = () => {
                       onChange={handleInputChange}
                       required
                       rows={5}
-                      className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
+                      className="border-muted-foreground/30 focus:border-primary focus:shadow-glow-primary transition-all duration-300 dark:border-muted-foreground/30"
                     />
                   </div>
 

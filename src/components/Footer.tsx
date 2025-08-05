@@ -11,9 +11,12 @@ import {
   Phone,
   MapPin,
   ArrowUp,
-  Send
+  Send,
+  CheckCircle
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ScrollAnimation } from "./ScrollAnimation";
+import { Newsletter } from "./Newsletter";
 
 const socialLinks = [
   { name: "Facebook", icon: Facebook, url: "#" },
@@ -26,96 +29,85 @@ const socialLinks = [
 ];
 
 const services = [
-  { name: "Mobile App Development", id: "mobile" },
-  { name: "WordPress Websites", id: "wordpress" }, 
-  { name: "CRM & ERP Systems", id: "crm" },
-  { name: "Custom Web Applications", id: "web-apps" },
-  { name: "E-commerce Solutions", id: "ecommerce" },
-  { name: "UI/UX Design", id: "design" }
+  { name: "Mobile App Development", id: "services" },
+  { name: "WordPress Websites", id: "services" }, 
+  { name: "CRM & ERP Systems", id: "services" },
+  { name: "Custom Web Applications", id: "services" },
+  { name: "E-commerce Solutions", id: "services" },
+  { name: "UI/UX Design", id: "services" }
 ];
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
+const scrollToSection = (sectionId: string) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 export const Footer = () => {
-  const { toast } = useToast();
-  const [email, setEmail] = useState("");
-  const [isSubscribing, setIsSubscribing] = useState(false);
-
-  const handleServiceClick = (serviceId: string) => {
-    // Scroll to services section and highlight specific service
-    const servicesSection = document.getElementById('services');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    
-    setIsSubscribing(true);
-    
-    // Simulate subscription
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast({
-      title: "🎉 Successfully Subscribed!",
-      description: "Welcome to Script Wind! You'll receive our latest updates and insights.",
-      className: "border-primary/20 bg-primary/5",
-    });
-    
-    setEmail("");
-    setIsSubscribing(false);
-  };
-
   return (
-    <footer className="relative bg-background border-t border-border">
-      {/* Background Elements */}
-      <div className="absolute inset-0 tech-gradient-subtle opacity-20" />
-      
-      <div className="relative z-10">
-        {/* Main Footer Content */}
-        <div className="max-w-7xl mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Company Info */}
-            <div className="lg:col-span-2">
-              <div className="mb-6">
-                <h3 className="text-3xl font-bold text-gradient mb-2">Script Wind</h3>
-                <p className="text-lg text-muted-foreground">Where ideas catch wind</p>
-              </div>
-              
-              <p className="text-muted-foreground mb-6 leading-relaxed max-w-md">
-                We build powerful digital solutions that help businesses grow. From scalable mobile apps to high-performance websites, 
-                we turn your vision into reality with cutting-edge technology and creative excellence.
+    <footer className="bg-background border-t border-border/50">
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <ScrollAnimation animationType="fade-up" className="md:col-span-2">
+            <div className="space-y-6">
+              <h3 className="text-3xl font-bold text-gradient">Script Wind</h3>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                We build powerful digital solutions that help businesses grow. 
+                From scalable mobile apps to high-performance websites, 
+                we turn your vision into reality with cutting-edge technology.
               </p>
               
-              <div className="space-y-3">
+              {/* Contact Info */}
+              <div className="space-y-4">
                 <div className="flex items-center space-x-3 text-muted-foreground">
-                  <Mail className="w-5 h-5 text-tech-cyan" />
+                  <Mail className="w-5 h-5 text-primary" />
                   <span>hello@scriptwind.com</span>
                 </div>
                 <div className="flex items-center space-x-3 text-muted-foreground">
-                  <Phone className="w-5 h-5 text-tech-cyan" />
+                  <Phone className="w-5 h-5 text-primary" />
                   <span>+1 (555) 123-WIND</span>
                 </div>
                 <div className="flex items-center space-x-3 text-muted-foreground">
-                  <MapPin className="w-5 h-5 text-tech-cyan" />
+                  <MapPin className="w-5 h-5 text-primary" />
                   <span>Global Digital Agency</span>
                 </div>
               </div>
+
+              {/* Social Media */}
+              <div className="flex space-x-4 pt-4">
+                {socialLinks.map((social) => {
+                  const IconComponent = social.icon;
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      className="p-3 rounded-lg bg-primary/10 border border-primary/20 transition-all duration-300 hover:text-primary hover:scale-110 hover:shadow-glow-primary hover:bg-primary/20 group"
+                      aria-label={social.name}
+                    >
+                      <IconComponent className="w-5 h-5 group-hover:animate-bounce" />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
-            
-            {/* Services */}
+          </ScrollAnimation>
+          
+          {/* Services */}
+          <ScrollAnimation animationType="fade-up" delay={200}>
             <div>
-              <h4 className="text-lg font-semibold mb-6 text-foreground">Our Services</h4>
+              <h4 className="text-xl font-semibold mb-6 text-foreground">Our Services</h4>
               <ul className="space-y-3">
                 {services.map((service) => (
-                  <li key={service.id}>
+                  <li key={service.name}>
                     <button 
-                      onClick={() => handleServiceClick(service.id)}
-                      className="text-muted-foreground hover:text-gradient hover:underline transition-smooth text-left w-full"
+                      onClick={() => scrollToSection(service.id)}
+                      className="text-muted-foreground hover:text-primary hover:translate-x-2 transition-all duration-200 text-left w-full"
                     >
                       {service.name}
                     </button>
@@ -123,93 +115,59 @@ export const Footer = () => {
                 ))}
               </ul>
             </div>
-            
-            {/* Connect */}
+          </ScrollAnimation>
+
+          {/* Quick Links */}
+          <ScrollAnimation animationType="fade-up" delay={300}>
             <div>
-              <h4 className="text-lg font-semibold mb-6 text-foreground">Connect With Us</h4>
-              
-              {/* Social Links */}
-              <div className="flex flex-wrap gap-3 mb-6">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    className="w-10 h-10 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-glow-primary hover:scale-110 hover:rotate-12 transition-all duration-300 group hover:shadow-glow-primary/80"
-                    aria-label={social.name}
-                  >
-                    <social.icon className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" />
-                  </a>
+              <h4 className="text-xl font-semibold mb-6 text-foreground">Quick Links</h4>
+              <ul className="space-y-3">
+                {[
+                  { name: "About Us", id: "about" },
+                  { name: "Portfolio", id: "portfolio" },
+                  { name: "Tech Stack", id: "tech-stack" },
+                  { name: "Contact", id: "contact" }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <button 
+                      onClick={() => scrollToSection(link.id)}
+                      className="text-muted-foreground hover:text-primary hover:translate-x-2 transition-all duration-200"
+                    >
+                      {link.name}
+                    </button>
+                  </li>
                 ))}
-              </div>
-              
-              {/* Newsletter */}
-              <div>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Stay updated with our latest projects and tech insights.
-                </p>
-                <form onSubmit={handleNewsletterSubmit} className="space-y-3">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="text-sm focus:shadow-glow-primary/50 focus:border-primary/50"
-                    required
-                  />
-                  <Button 
-                    type="submit" 
-                    variant="hero" 
-                    size="sm" 
-                    className="w-full group"
-                    disabled={isSubscribing}
-                  >
-                    {isSubscribing ? (
-                      <>
-                        <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2" />
-                        Subscribing...
-                      </>
-                    ) : (
-                      <>
-                        Subscribe
-                        <Send className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </div>
+              </ul>
             </div>
-          </div>
+          </ScrollAnimation>
         </div>
-        
+
+        {/* Newsletter Section */}
+        <div className="mt-12">
+          <ScrollAnimation animationType="fade-up" delay={400}>
+            <Newsletter />
+          </ScrollAnimation>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="border-t border-border bg-muted/30">
-          <div className="max-w-7xl mx-auto px-4 py-6">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="text-sm text-muted-foreground">
-                © 2024 Script Wind. All rights reserved. Made with ❤️ and cutting-edge tech.
-              </div>
-              
-              <div className="flex items-center space-x-6">
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-smooth">
-                  Privacy Policy
-                </a>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-smooth">
-                  Terms of Service
-                </a>
-                
-                {/* Back to Top */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={scrollToTop}
-                  className="group"
-                >
-                  <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
-                  Back to Top
-                </Button>
-              </div>
-            </div>
-          </div>
+        <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center">
+          <ScrollAnimation animationType="fade-up" delay={500}>
+            <p className="text-muted-foreground text-center md:text-left">
+              © 2024 Script Wind. All rights reserved. Built with ❤️ and cutting-edge technology.
+            </p>
+          </ScrollAnimation>
+          
+          <ScrollAnimation animationType="fade-up" delay={600}>
+            <Button
+              onClick={scrollToTop}
+              variant="outline"
+              size="sm"
+              className="mt-4 md:mt-0 border-primary/20 hover:bg-primary/10 hover:border-primary/50 hover:shadow-glow-primary group"
+            >
+              <ArrowUp className="w-4 h-4 mr-2 group-hover:animate-bounce" />
+              Back to Top
+            </Button>
+          </ScrollAnimation>
         </div>
       </div>
     </footer>
