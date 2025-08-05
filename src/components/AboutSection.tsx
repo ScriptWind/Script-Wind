@@ -66,7 +66,7 @@ export const AboutSection = () => {
               <AnimatedText animationType="slide-up-words" className="text-3xl font-bold mb-6 text-white">
                 Our Mission
               </AnimatedText>
-              <p className="text-xl leading-relaxed text-white/90">
+              <p className="text-xl leading-relaxed text-white">
                 To turn your vision into a reliable, scalable, and beautifully built product — fast and professionally. 
                 We combine <strong className="text-white font-bold">clean code</strong>, <strong className="text-white font-bold">bold ideas</strong>, and a <strong className="text-white font-bold">user-first mindset</strong> to deliver results that truly make an impact.
               </p>
