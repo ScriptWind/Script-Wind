@@ -98,7 +98,7 @@ export const Footer = () => {
               </div>
 
               {/* Social Media */}
-              <div className="flex space-x-4 pt-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 justify-center sm:justify-start">
                 {socialLinks.map(social => {
                 const IconComponent = social.icon;
                 return <a key={social.name} href={social.url} className="p-3 rounded-lg bg-primary/10 border border-primary/20 transition-all duration-300 hover:scale-110 hover:shadow-glow-primary hover:bg-primary/20 group" style={{
