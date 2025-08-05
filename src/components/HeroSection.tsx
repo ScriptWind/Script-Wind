@@ -4,7 +4,7 @@ import heroVideoBackground from "@/assets/hero-video-bg.jpg";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <img 
