@@ -107,8 +107,8 @@ export const Navigation = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 top-0 z-50 animate-slide-in-right">
-          <div className="absolute inset-0 bg-background/98 backdrop-blur-xl border-r border-primary/20">
-            <div className="h-full flex flex-col justify-start items-center pt-24 space-y-8 px-8">
+          <div className="absolute inset-0 bg-background/95 backdrop-blur-2xl border-r border-primary/30 shadow-2xl">
+            <div className="h-full flex flex-col justify-start items-center pt-20 space-y-6 px-8">
               {/* Close button */}
               <div className="absolute top-6 right-6">
                 <Button
