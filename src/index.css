@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* Brand Colors - High-tech Blues, Purples, Cyans */
+    /* Brand Colors - Script Wind Pink Theme */
     --background: 220 26% 4%;
     --foreground: 210 40% 98%;
 
@@ -16,7 +16,7 @@
     --popover: 220 26% 6%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 340 89% 49%;
     --primary-foreground: 220 26% 4%;
 
     --secondary: 263 70% 50%;
@@ -25,7 +25,7 @@
     --muted: 220 26% 8%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 180 100% 50%;
+    --accent: 340 89% 49%;
     --accent-foreground: 220 26% 4%;
 
     --destructive: 0 84% 60%;
@@ -33,21 +33,26 @@
 
     --border: 220 26% 12%;
     --input: 220 26% 8%;
-    --ring: 217 91% 60%;
+    --ring: 340 89% 49%;
 
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
+    --theme-pink: 340 89% 49%;
     --tech-blue: 217 91% 60%;
     --tech-purple: 263 70% 50%;
     --tech-cyan: 180 100% 50%;
-    --tech-gradient: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(263 70% 50%) 50%, hsl(180 100% 50%) 100%);
-    --tech-gradient-subtle: linear-gradient(135deg, hsl(217 91% 60% / 0.1) 0%, hsl(263 70% 50% / 0.1) 100%);
-    --glow-primary: 0 0 40px hsl(217 91% 60% / 0.3);
-    --glow-accent: 0 0 40px hsl(180 100% 50% / 0.3);
+    --tech-gradient: linear-gradient(135deg, hsl(340 89% 49%) 0%, hsl(340 89% 60%) 50%, hsl(340 89% 70%) 100%);
+    --tech-gradient-subtle: linear-gradient(135deg, hsl(340 89% 49% / 0.1) 0%, hsl(340 89% 49% / 0.05) 100%);
+    --glow-primary: 0 0 40px hsl(340 89% 49% / 0.3);
+    --glow-accent: 0 0 40px hsl(340 89% 49% / 0.4);
     --shadow-elevated: 0 20px 40px -12px hsl(220 26% 4% / 0.8);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Glassmorphism */
+    --glass-bg: hsl(220 26% 6% / 0.3);
+    --glass-border: hsl(340 89% 49% / 0.2);
 
     --sidebar-background: 0 0% 98%;
 
@@ -73,21 +78,21 @@
     --card-foreground: 220 26% 4%;
     --popover: 0 0% 100%;
     --popover-foreground: 220 26% 4%;
-    --primary: 217 91% 60%;
+    --primary: 340 89% 49%;
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 220 26% 4%;
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-    --accent: 180 100% 50%;
+    --accent: 340 89% 49%;
     --accent-foreground: 220 26% 4%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 217 91% 60%;
-    --tech-gradient: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(263 70% 50%) 50%, hsl(180 100% 50%) 100%);
-    --tech-gradient-subtle: linear-gradient(135deg, hsl(217 91% 60% / 0.1) 0%, hsl(263 70% 50% / 0.1) 100%);
-    --glow-primary: 0 0 40px hsl(217 91% 60% / 0.2);
-    --glow-accent: 0 0 40px hsl(180 100% 50% / 0.2);
+    --ring: 340 89% 49%;
+    --tech-gradient: linear-gradient(135deg, hsl(340 89% 49%) 0%, hsl(340 89% 60%) 50%, hsl(340 89% 70%) 100%);
+    --tech-gradient-subtle: linear-gradient(135deg, hsl(340 89% 49% / 0.1) 0%, hsl(340 89% 49% / 0.05) 100%);
+    --glow-primary: 0 0 40px hsl(340 89% 49% / 0.2);
+    --glow-accent: 0 0 40px hsl(340 89% 49% / 0.3);
     --shadow-elevated: 0 20px 40px -12px hsl(220 26% 4% / 0.1);
   }
 }
@@ -149,6 +154,14 @@
     background: hsl(var(--background) / 0.8);
   }
 
+  /* Glassmorphism */
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
   /* Hover animations */
   .hover-lift {
     @apply transition-smooth hover:scale-105 hover:shadow-elevated;
@@ -160,5 +173,23 @@
 
   .hover-float {
     @apply transition-smooth hover:-translate-y-2;
+  }
+
+  /* Form animations */
+  .animated-input {
+    @apply relative;
+  }
+
+  .animated-input input {
+    @apply bg-transparent border-0 border-b-2 border-muted-foreground/30 focus:border-primary outline-none transition-colors duration-300 pb-2;
+  }
+
+  .animated-input label {
+    @apply absolute left-0 top-0 text-muted-foreground transition-all duration-300 pointer-events-none;
+  }
+
+  .animated-input input:focus + label,
+  .animated-input input:not(:placeholder-shown) + label {
+    @apply -translate-y-6 text-sm text-primary;
   }
 }

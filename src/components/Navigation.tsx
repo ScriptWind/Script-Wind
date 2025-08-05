@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import scriptWindLogo from "@/assets/script-wind-logo.webp";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,14 +26,18 @@ export const Navigation = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <button 
               onClick={() => scrollToSection('hero')}
-              className="text-2xl font-bold text-gradient hover:scale-105 transition-transform"
+              className="hover:scale-105 transition-transform"
             >
-              Script Wind
+              <img 
+                src={scriptWindLogo} 
+                alt="Script Wind" 
+                className="h-10 w-auto"
+              />
             </button>
           </div>
 
@@ -43,9 +48,10 @@ export const Navigation = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-foreground/80 hover:text-foreground hover:text-gradient transition-all duration-200 px-3 py-2 text-sm font-medium"
+                  className="text-foreground/80 hover:text-primary transition-all duration-200 px-3 py-2 text-sm font-medium relative group"
                 >
                   {item.label}
+                  <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-[calc(100%-24px)]" />
                 </button>
               ))}
             </div>

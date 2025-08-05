@@ -101,32 +101,32 @@ export const TechStackSection = () => {
 
         {/* Tech Categories */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center p-8 rounded-xl bg-card border shadow-elevated">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-tech-gradient flex items-center justify-center">
+          <div className="glass-card text-center p-8 rounded-xl hover:scale-105 hover:shadow-glow-primary transition-all duration-500 group">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-tech-gradient flex items-center justify-center group-hover:animate-pulse">
               <span className="text-2xl">⚡</span>
             </div>
-            <h3 className="text-xl font-semibold mb-4">Frontend Excellence</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-xl font-semibold mb-4 group-hover:text-gradient transition-colors">Frontend Excellence</h3>
+            <p className="text-muted-foreground group-hover:text-foreground transition-colors">
               Modern frameworks and libraries for creating stunning, responsive user interfaces.
             </p>
           </div>
 
-          <div className="text-center p-8 rounded-xl bg-card border shadow-elevated">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-tech-gradient flex items-center justify-center">
+          <div className="glass-card text-center p-8 rounded-xl hover:scale-105 hover:shadow-glow-primary transition-all duration-500 group">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-tech-gradient flex items-center justify-center group-hover:animate-pulse">
               <span className="text-2xl">🛠️</span>
             </div>
-            <h3 className="text-xl font-semibold mb-4">Backend Power</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-xl font-semibold mb-4 group-hover:text-gradient transition-colors">Backend Power</h3>
+            <p className="text-muted-foreground group-hover:text-foreground transition-colors">
               Robust server-side technologies and databases for scalable, secure applications.
             </p>
           </div>
 
-          <div className="text-center p-8 rounded-xl bg-card border shadow-elevated">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-tech-gradient flex items-center justify-center">
+          <div className="glass-card text-center p-8 rounded-xl hover:scale-105 hover:shadow-glow-primary transition-all duration-500 group">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-tech-gradient flex items-center justify-center group-hover:animate-pulse">
               <span className="text-2xl">☁️</span>
             </div>
-            <h3 className="text-xl font-semibold mb-4">Cloud & DevOps</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-xl font-semibold mb-4 group-hover:text-gradient transition-colors">Cloud & DevOps</h3>
+            <p className="text-muted-foreground group-hover:text-foreground transition-colors">
               Modern deployment and infrastructure tools for reliable, scalable solutions.
             </p>
           </div>

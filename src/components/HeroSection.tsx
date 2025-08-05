@@ -1,25 +1,32 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
-import heroVideoBackground from "@/assets/hero-video-bg.jpg";
+import { ArrowRight } from "lucide-react";
 export const HeroSection = () => {
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
-        <img src={heroVideoBackground} alt="Tech background" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-background/70 backdrop-blur-sm" />
         <div className="absolute inset-0 tech-gradient-subtle" />
       </div>
 
       {/* Floating Elements */}
       <div className="absolute inset-0 z-10">
-        <div className="absolute top-20 left-10 w-4 h-4 bg-tech-cyan rounded-full animate-float opacity-60" />
-        <div className="absolute top-40 right-20 w-3 h-3 bg-tech-blue rounded-full animate-float opacity-40" style={{
+        <div className="absolute top-20 left-10 w-4 h-4 bg-primary rounded-full animate-float opacity-60" />
+        <div className="absolute top-40 right-20 w-3 h-3 bg-primary rounded-full animate-float opacity-40" style={{
         animationDelay: '1s'
       }} />
-        <div className="absolute bottom-40 left-1/4 w-2 h-2 bg-tech-purple rounded-full animate-float opacity-50" style={{
+        <div className="absolute bottom-40 left-1/4 w-2 h-2 bg-primary rounded-full animate-float opacity-50" style={{
         animationDelay: '2s'
       }} />
-        <div className="absolute bottom-60 right-1/3 w-5 h-5 bg-accent rounded-full animate-float opacity-30" style={{
+        <div className="absolute bottom-60 right-1/3 w-5 h-5 bg-primary rounded-full animate-float opacity-30" style={{
         animationDelay: '0.5s'
       }} />
       </div>
