@@ -89,7 +89,7 @@ const categories = [
   "Web Application"
 ];
 
-export const Portfolio = () => {
+const Portfolio = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All Projects");
 
@@ -218,3 +218,5 @@ export const Portfolio = () => {
     </div>
   );
 };
+
+export default Portfolio;
