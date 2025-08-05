@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ScrollAnimation } from "./ScrollAnimation";
+import { AnimatedText } from "./AnimatedText";
 
 interface FormData {
   name: string;
@@ -46,8 +48,9 @@ export const ContactSection = () => {
     setIsSubmitted(true);
     
     toast({
-      title: "Message Sent!",
+      title: "🎉 Message Sent Successfully!",
       description: "Thank you for reaching out. We'll get back to you within 24 hours.",
+      className: "border-primary/20 bg-primary/5",
     });
 
     // Reset form after success animation
@@ -74,20 +77,23 @@ export const ContactSection = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
+        <ScrollAnimation animationType="fade-up" className="text-center mb-16">
+          <AnimatedText animationType="typewriter" className="text-5xl md:text-6xl font-bold mb-6">
             Let's Build Together
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Ready to transform your ideas into powerful digital solutions? 
-            Get in touch and let's discuss how we can help bring your vision to life.
-          </p>
-        </div>
+          </AnimatedText>
+          <ScrollAnimation animationType="fade-up" delay={200}>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Ready to transform your ideas into powerful digital solutions? 
+              Get in touch and let's discuss how we can help bring your vision to life.
+            </p>
+          </ScrollAnimation>
+        </ScrollAnimation>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
-            <Card className="hover-lift">
+            <ScrollAnimation animationType="fade-right">
+              <Card className="hover-lift hover:shadow-glow-primary/30 transition-all duration-500">
               <CardHeader>
                 <CardTitle className="text-2xl">Get In Touch</CardTitle>
               </CardHeader>
@@ -122,10 +128,12 @@ export const ContactSection = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            </ScrollAnimation>
 
             {/* Why Choose Us */}
-            <Card className="hover-lift bg-tech-gradient border-0 text-white">
+            <ScrollAnimation animationType="fade-right" delay={200}>
+              <Card className="hover-lift bg-tech-gradient border-0 text-white hover:shadow-glow-primary/50 transition-all duration-500">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-bold mb-6">Why Choose Script Wind?</h3>
                 <ul className="space-y-4">
@@ -143,19 +151,21 @@ export const ContactSection = () => {
                   ))}
                 </ul>
               </CardContent>
-            </Card>
+              </Card>
+            </ScrollAnimation>
           </div>
 
           {/* Contact Form */}
-          <Card className="hover-lift">
+          <ScrollAnimation animationType="fade-left">
+            <Card className="hover-lift hover:shadow-glow-primary/30 transition-all duration-500">
             <CardHeader>
               <CardTitle className="text-2xl">Start Your Project</CardTitle>
             </CardHeader>
             <CardContent>
               {isSubmitted ? (
-                <div className="text-center py-12 animate-scale-in">
-                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
+                <div className="text-center py-12 animate-bounce-letters">
+                  <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4 animate-bounce" />
+                  <h3 className="text-2xl font-bold mb-2 text-gradient">Message Sent!</h3>
                   <p className="text-muted-foreground">We'll get back to you within 24 hours.</p>
                 </div>
               ) : (
@@ -170,7 +180,7 @@ export const ContactSection = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="transition-smooth focus:shadow-glow-primary"
+                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50 group relative"
                       />
                     </div>
                     <div className="space-y-2">
@@ -183,7 +193,7 @@ export const ContactSection = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="transition-smooth focus:shadow-glow-primary"
+                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
                       />
                     </div>
                   </div>
@@ -197,7 +207,7 @@ export const ContactSection = () => {
                         placeholder="Your Company"
                         value={formData.company}
                         onChange={handleInputChange}
-                        className="transition-smooth focus:shadow-glow-primary"
+                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
                       />
                     </div>
                     <div className="space-y-2">
@@ -208,7 +218,7 @@ export const ContactSection = () => {
                         placeholder="Mobile App, Website, CRM..."
                         value={formData.project}
                         onChange={handleInputChange}
-                        className="transition-smooth focus:shadow-glow-primary"
+                        className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
                       />
                     </div>
                   </div>
@@ -223,7 +233,7 @@ export const ContactSection = () => {
                       onChange={handleInputChange}
                       required
                       rows={5}
-                      className="transition-smooth focus:shadow-glow-primary"
+                      className="transition-smooth focus:shadow-glow-primary focus:border-primary/50"
                     />
                   </div>
 
@@ -249,7 +259,8 @@ export const ContactSection = () => {
                 </form>
               )}
             </CardContent>
-          </Card>
+            </Card>
+          </ScrollAnimation>
         </div>
       </div>
     </section>

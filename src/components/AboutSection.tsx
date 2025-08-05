@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Target, Users, Lightbulb, Rocket } from "lucide-react";
+import { ScrollAnimation } from "./ScrollAnimation";
+import { AnimatedText } from "./AnimatedText";
 const milestones = [{
   year: "2021",
   title: "Founded",
@@ -45,46 +47,60 @@ export const AboutSection = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
+        <ScrollAnimation animationType="fade-up" className="text-center mb-16">
+          <AnimatedText animationType="glow-pulse" className="text-5xl md:text-6xl font-bold mb-6">
             About Script Wind
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            We're more than just a development team — we're your digital transformation partners. 
-            At Script Wind, we combine technical expertise with creative vision to build solutions that make a real impact.
-          </p>
-        </div>
+          </AnimatedText>
+          <ScrollAnimation animationType="fade-up" delay={200}>
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              We're more than just a development team — we're your digital transformation partners. 
+              At Script Wind, we combine technical expertise with creative vision to build solutions that make a real impact.
+            </p>
+          </ScrollAnimation>
+        </ScrollAnimation>
 
         {/* Mission Statement */}
-        <div className="text-center mb-20">
-          <Card className="max-w-4xl mx-auto bg-tech-gradient p-12 border-0 shadow-glow-primary">
+        <ScrollAnimation animationType="scale-in" className="text-center mb-20">
+          <Card className="max-w-4xl mx-auto bg-tech-gradient p-12 border-0 shadow-glow-primary hover:shadow-glow-primary/80 transition-all duration-500 hover:scale-105">
             <div className="text-white">
-              <h3 className="text-3xl font-bold mb-6">Our Mission</h3>
+              <AnimatedText animationType="slide-up-words" className="text-3xl font-bold mb-6">
+                Our Mission
+              </AnimatedText>
               <p className="text-xl leading-relaxed opacity-90">
                 To turn your vision into a reliable, scalable, and beautifully built product — fast and professionally. 
                 We combine <strong>clean code</strong>, <strong>bold ideas</strong>, and a <strong>user-first mindset</strong> to deliver results that truly make an impact.
               </p>
             </div>
           </Card>
-        </div>
+        </ScrollAnimation>
 
         {/* Company Values */}
         <div className="mb-20">
-          <h3 className="text-3xl font-bold text-center mb-12">Our Values</h3>
+          <ScrollAnimation animationType="fade-up">
+            <AnimatedText animationType="bounce-letters" className="text-3xl font-bold text-center mb-12">
+              Our Values
+            </AnimatedText>
+          </ScrollAnimation>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => <Card key={value.title} className={`text-center hover-lift animate-fade-in`} style={{
-            animationDelay: `${index * 0.1}s`
-          }}>
-                <CardHeader>
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-tech-gradient flex items-center justify-center shadow-glow-primary">
-                    <value.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <CardTitle className="text-xl">{value.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{value.description}</p>
-                </CardContent>
-              </Card>)}
+            {values.map((value, index) => (
+              <ScrollAnimation 
+                key={value.title}
+                animationType="fade-up"
+                delay={index * 150}
+              >
+                <Card className="text-center hover-lift group hover:shadow-glow-primary/50 transition-all duration-500 hover:scale-105">
+                  <CardHeader>
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-tech-gradient flex items-center justify-center shadow-glow-primary group-hover:shadow-glow-primary/80 group-hover:scale-110 transition-all duration-300">
+                      <value.icon className="w-8 h-8 text-white group-hover:animate-bounce" />
+                    </div>
+                    <CardTitle className="text-xl group-hover:text-gradient transition-all duration-300">{value.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground group-hover:text-foreground transition-all duration-300">{value.description}</p>
+                  </CardContent>
+                </Card>
+              </ScrollAnimation>
+            ))}
           </div>
         </div>
 

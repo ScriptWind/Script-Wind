@@ -1,15 +1,43 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { PortfolioModal } from "./PortfolioModal";
+import { useNavigate } from "react-router-dom";
+import { ScrollAnimation } from "./ScrollAnimation";
+import { AnimatedText } from "./AnimatedText";
 
 const portfolioItems = [
   {
     title: "FinTech Mobile App",
     category: "Mobile Development",
     description: "A comprehensive financial management app with real-time analytics, secure transactions, and beautiful UI built with React Native.",
+    fullDescription: "This revolutionary FinTech application transforms how users manage their finances. Built with React Native for cross-platform compatibility, it features real-time market data, secure biometric authentication, and AI-powered spending insights. The app includes advanced features like investment tracking, budget optimization, and seamless bank integrations.",
     image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+    ],
     tags: ["React Native", "Node.js", "MongoDB", "Stripe"],
-    color: "from-blue-500 to-purple-600"
+    technologies: ["React Native", "TypeScript", "Node.js", "Express", "MongoDB", "Stripe API", "JWT", "Socket.io"],
+    features: [
+      "Real-time market data and analytics",
+      "Biometric authentication and security",
+      "AI-powered spending insights",
+      "Investment portfolio tracking",
+      "Budget optimization algorithms",
+      "Seamless bank integrations"
+    ],
+    challenges: [
+      "Implementing real-time data synchronization across devices",
+      "Ensuring bank-level security standards",
+      "Creating intuitive UX for complex financial data",
+      "Optimizing performance for large datasets"
+    ],
+    color: "from-blue-500 to-purple-600",
+    liveUrl: "https://example.com",
+    githubUrl: "https://github.com/example"
   },
   {
     title: "E-Commerce Platform",
@@ -54,6 +82,19 @@ const portfolioItems = [
 ];
 
 export const PortfolioSection = () => {
+  const navigate = useNavigate();
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleViewProject = (project: any) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleViewFullPortfolio = () => {
+    navigate('/portfolio');
+  };
+
   return (
     <section className="py-24 px-4 relative overflow-hidden bg-muted/20">
       {/* Background Elements */}
@@ -64,24 +105,30 @@ export const PortfolioSection = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
+        <ScrollAnimation animationType="fade-up" className="text-center mb-16">
+          <AnimatedText animationType="gradient-wave" className="text-5xl md:text-6xl font-bold mb-6">
             Our Portfolio
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Discover the innovative solutions we've built for businesses across various industries. 
-            Each project showcases our commitment to excellence and cutting-edge technology.
-          </p>
-        </div>
+          </AnimatedText>
+          <ScrollAnimation animationType="fade-up" delay={200}>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Discover the innovative solutions we've built for businesses across various industries. 
+              Each project showcases our commitment to excellence and cutting-edge technology.
+            </p>
+          </ScrollAnimation>
+        </ScrollAnimation>
 
         {/* Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {portfolioItems.map((item, index) => (
-            <Card 
-              key={item.title} 
-              className={`group hover-lift cursor-pointer animate-fade-in`}
-              style={{ animationDelay: `${index * 0.1}s` }}
+            <ScrollAnimation 
+              key={item.title}
+              animationType="scale-in"
+              delay={index * 100}
             >
+              <Card 
+                className="group hover-lift cursor-pointer"
+                onClick={() => handleViewProject(item)}
+              >
               <CardContent className="p-0">
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-t-xl">
@@ -137,20 +184,28 @@ export const PortfolioSection = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            </ScrollAnimation>
           ))}
         </div>
 
         {/* Portfolio CTA */}
-        <div className="text-center">
+        <ScrollAnimation animationType="fade-up" className="text-center">
           <Card className="max-w-4xl mx-auto p-12">
-            <h3 className="text-3xl font-bold mb-6">Want to See More?</h3>
+            <AnimatedText animationType="bounce-letters" className="text-3xl font-bold mb-6">
+              Want to See More?
+            </AnimatedText>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
               These are just a few examples of our work. We've completed 50+ successful projects across 
               various industries. Let's discuss how we can create something amazing for your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="hero" size="xl" className="group">
+              <Button 
+                variant="hero" 
+                size="xl" 
+                className="group"
+                onClick={handleViewFullPortfolio}
+              >
                 View Full Portfolio
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -159,7 +214,13 @@ export const PortfolioSection = () => {
               </Button>
             </div>
           </Card>
-        </div>
+        </ScrollAnimation>
+
+        <PortfolioModal 
+          project={selectedProject}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </div>
     </section>
   );

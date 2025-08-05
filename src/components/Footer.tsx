@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { 
   Facebook, 
   Instagram, 
@@ -8,24 +10,28 @@ import {
   Mail,
   Phone,
   MapPin,
-  ArrowUp
+  ArrowUp,
+  Send
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const socialLinks = [
   { name: "Facebook", icon: Facebook, url: "#" },
   { name: "Instagram", icon: Instagram, url: "#" },
+  { name: "TikTok", icon: (props: any) => <svg {...props} viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43V7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.43z"/></svg>, url: "#" },
+  { name: "Threads", icon: (props: any) => <svg {...props} viewBox="0 0 24 24" fill="currentColor"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.01 1.5 4.718 5.486.734 12.014.734c6.524 0 10.486 3.984 10.486 11.276 0 3.576-.851 6.43-2.496 8.481-1.85 2.304-4.603 3.485-8.184 3.509z"/></svg>, url: "#" },
   { name: "Twitter/X", icon: Twitter, url: "#" },
   { name: "LinkedIn", icon: Linkedin, url: "#" },
   { name: "YouTube", icon: Youtube, url: "#" },
 ];
 
 const services = [
-  "Mobile App Development",
-  "WordPress Websites", 
-  "CRM & ERP Systems",
-  "Custom Web Applications",
-  "E-commerce Solutions",
-  "UI/UX Design"
+  { name: "Mobile App Development", id: "mobile" },
+  { name: "WordPress Websites", id: "wordpress" }, 
+  { name: "CRM & ERP Systems", id: "crm" },
+  { name: "Custom Web Applications", id: "web-apps" },
+  { name: "E-commerce Solutions", id: "ecommerce" },
+  { name: "UI/UX Design", id: "design" }
 ];
 
 const scrollToTop = () => {
@@ -33,6 +39,37 @@ const scrollToTop = () => {
 };
 
 export const Footer = () => {
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleServiceClick = (serviceId: string) => {
+    // Scroll to services section and highlight specific service
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setIsSubscribing(true);
+    
+    // Simulate subscription
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    toast({
+      title: "🎉 Successfully Subscribed!",
+      description: "Welcome to Script Wind! You'll receive our latest updates and insights.",
+      className: "border-primary/20 bg-primary/5",
+    });
+    
+    setEmail("");
+    setIsSubscribing(false);
+  };
+
   return (
     <footer className="relative bg-background border-t border-border">
       {/* Background Elements */}
@@ -75,13 +112,13 @@ export const Footer = () => {
               <h4 className="text-lg font-semibold mb-6 text-foreground">Our Services</h4>
               <ul className="space-y-3">
                 {services.map((service) => (
-                  <li key={service}>
-                    <a 
-                      href="#" 
-                      className="text-muted-foreground hover:text-gradient hover:underline transition-smooth"
+                  <li key={service.id}>
+                    <button 
+                      onClick={() => handleServiceClick(service.id)}
+                      className="text-muted-foreground hover:text-gradient hover:underline transition-smooth text-left w-full"
                     >
-                      {service}
-                    </a>
+                      {service.name}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -97,10 +134,10 @@ export const Footer = () => {
                   <a
                     key={social.name}
                     href={social.url}
-                    className="w-10 h-10 bg-tech-gradient rounded-lg flex items-center justify-center shadow-glow-primary hover:scale-110 transition-smooth group"
+                    className="w-10 h-10 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-glow-primary hover:scale-110 hover:rotate-12 transition-all duration-300 group hover:shadow-glow-primary/80"
                     aria-label={social.name}
                   >
-                    <social.icon className="w-5 h-5 text-white group-hover:animate-bounce" />
+                    <social.icon className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" />
                   </a>
                 ))}
               </div>
@@ -110,9 +147,35 @@ export const Footer = () => {
                 <p className="text-sm text-muted-foreground mb-3">
                   Stay updated with our latest projects and tech insights.
                 </p>
-                <Button variant="outline" size="sm" className="w-full">
-                  Subscribe to Newsletter
-                </Button>
+                <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="text-sm focus:shadow-glow-primary/50 focus:border-primary/50"
+                    required
+                  />
+                  <Button 
+                    type="submit" 
+                    variant="hero" 
+                    size="sm" 
+                    className="w-full group"
+                    disabled={isSubscribing}
+                  >
+                    {isSubscribing ? (
+                      <>
+                        <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2" />
+                        Subscribing...
+                      </>
+                    ) : (
+                      <>
+                        Subscribe
+                        <Send className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                  </Button>
+                </form>
               </div>
             </div>
           </div>

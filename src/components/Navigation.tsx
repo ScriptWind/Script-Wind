@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import scriptWindLogo from "@/assets/script-wind-logo.webp";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -24,7 +33,11 @@ export const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-background/95 backdrop-blur-xl border-b border-primary/20 shadow-lg' 
+        : 'bg-background/80 backdrop-blur-md border-b border-border/50'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -36,7 +49,7 @@ export const Navigation = () => {
               <img 
                 src={scriptWindLogo} 
                 alt="Script Wind" 
-                className="h-10 w-auto"
+                className="h-12 w-auto"
               />
             </button>
           </div>
@@ -73,17 +86,25 @@ export const Navigation = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background/95 backdrop-blur-md border-b border-border/50">
-            {menuItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-foreground/80 hover:text-foreground hover:text-gradient block px-3 py-2 text-base font-medium w-full text-left transition-all duration-200"
-              >
-                {item.label}
-              </button>
-            ))}
+        <div className="md:hidden fixed inset-0 top-20 z-40 animate-slide-in-right">
+          <div className="absolute inset-0 bg-background/95 backdrop-blur-xl">
+            <div className="h-full flex flex-col justify-center items-center space-y-8 px-8">
+              {menuItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-2xl font-bold text-foreground/80 hover:text-gradient transition-all duration-300 hover:scale-110 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {item.label}
+                </button>
+              ))}
+              <div className="flex space-x-4 mt-8">
+                <Button variant="hero" size="lg" className="animate-bounce">
+                  Get Started
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       )}
