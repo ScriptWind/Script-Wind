@@ -107,26 +107,26 @@ export const Navigation = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 top-0 z-50 animate-slide-in-right">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background/95 to-tech-purple/20 backdrop-blur-xl">
-            <div className="h-full flex flex-col justify-center items-center space-y-12 px-8">
+          <div className="absolute inset-0 bg-background/98 backdrop-blur-xl border-r border-primary/20">
+            <div className="h-full flex flex-col justify-start items-center pt-24 space-y-8 px-8">
               {/* Close button */}
               <div className="absolute top-6 right-6">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsMenuOpen(false)}
-                  className="p-2 text-white hover:text-primary"
+                  className="p-2 text-foreground hover:text-primary"
                 >
                   <X size={24} />
                 </Button>
               </div>
               
               {/* Logo */}
-              <div className="animate-fade-in">
+              <div className="animate-fade-in mb-4">
                 <img 
                   src={scriptWindLogo} 
                   alt="Script Wind" 
-                  className="h-20 w-auto"
+                  className="h-16 w-auto"
                 />
               </div>
               
@@ -135,11 +135,11 @@ export const Navigation = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-3xl font-bold text-foreground hover:text-primary transition-all duration-300 hover:scale-110 animate-fade-in relative group"
+                  className="text-2xl font-semibold text-foreground hover:text-primary transition-all duration-300 hover:scale-105 animate-fade-in relative group py-3"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {item.label}
-                  <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
+                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
                 </button>
               ))}
             </div>

@@ -66,7 +66,14 @@ export const Newsletter = () => {
             type="submit"
             variant="secondary"
             disabled={isSubmitting || !email}
-            className="bg-white text-primary hover:bg-white/90 min-w-[140px]"
+            className="bg-white min-w-[140px]"
+            style={{ color: '#ed0e64' } as React.CSSProperties}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = 'white';
+            }}
           >
             {isSubmitting ? (
               <>

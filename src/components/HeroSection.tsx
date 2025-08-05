@@ -29,7 +29,12 @@ export const HeroSection = () => {
       <div className="relative z-20 text-center px-4 max-w-6xl mx-auto">
         {/* Logo */}
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-6xl md:text-8xl font-bold text-gradient mb-4">Where ideas catch wind</h1>
+          <h1 className="text-6xl md:text-8xl font-bold text-gradient mb-4 uppercase tracking-wide">
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.1s' }}>WHERE</span>{' '}
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.3s' }}>IDEAS</span>{' '}
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.5s' }}>CATCH</span>{' '}
+            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.7s' }}>WIND</span>
+          </h1>
           <div className="h-1 w-32 tech-gradient mx-auto rounded-full shadow-glow-primary" />
         </div>
 

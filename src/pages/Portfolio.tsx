@@ -100,7 +100,7 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-background pt-20">
       {/* Header */}
-      <div className="bg-gradient-to-br from-primary/20 to-secondary/20 py-16">
+      <div className="bg-gradient-to-br from-primary/20 to-secondary/20 py-16 mt-0">
         <div className="max-w-7xl mx-auto px-4">
           <Button
             variant="ghost"

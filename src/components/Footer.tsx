@@ -87,7 +87,16 @@ export const Footer = () => {
                     <a
                       key={social.name}
                       href={social.url}
-                      className="p-3 rounded-lg bg-primary/10 border border-primary/20 transition-all duration-300 hover:text-primary hover:scale-110 hover:shadow-glow-primary hover:bg-primary/20 group"
+                      className="p-3 rounded-lg bg-primary/10 border border-primary/20 transition-all duration-300 hover:scale-110 hover:shadow-glow-primary hover:bg-primary/20 group"
+                      style={{ '--hover-color': '#ed0e64' } as React.CSSProperties}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = '#ed0e64';
+                        (e.currentTarget as HTMLElement).style.borderColor = '#ed0e64';
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = '';
+                        (e.currentTarget as HTMLElement).style.borderColor = '';
+                      }}
                       aria-label={social.name}
                     >
                       <IconComponent className="w-5 h-5 group-hover:animate-bounce" />
@@ -107,7 +116,14 @@ export const Footer = () => {
                   <li key={service.name}>
                     <button 
                       onClick={() => scrollToSection(service.id)}
-                      className="text-muted-foreground hover:text-primary hover:translate-x-2 transition-all duration-200 text-left w-full"
+                      className="text-muted-foreground hover:translate-x-2 transition-all duration-200 text-left w-full"
+                      style={{ '--hover-color': '#ed0e64' } as React.CSSProperties}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = '#ed0e64';
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = '';
+                      }}
                     >
                       {service.name}
                     </button>
@@ -131,7 +147,14 @@ export const Footer = () => {
                   <li key={link.name}>
                     <button 
                       onClick={() => scrollToSection(link.id)}
-                      className="text-muted-foreground hover:text-primary hover:translate-x-2 transition-all duration-200"
+                      className="text-muted-foreground hover:translate-x-2 transition-all duration-200"
+                      style={{ '--hover-color': '#ed0e64' } as React.CSSProperties}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = '#ed0e64';
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.color = '';
+                      }}
                     >
                       {link.name}
                     </button>
@@ -162,7 +185,16 @@ export const Footer = () => {
               onClick={scrollToTop}
               variant="outline"
               size="sm"
-              className="mt-4 md:mt-0 border-primary/20 hover:bg-primary/10 hover:border-primary/50 hover:shadow-glow-primary group"
+              className="mt-4 md:mt-0 border-primary/20 hover:bg-primary/10 hover:shadow-glow-primary group"
+              style={{ '--hover-color': '#ed0e64', '--hover-border-color': '#ed0e64' } as React.CSSProperties}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = '#ed0e64';
+                (e.currentTarget as HTMLElement).style.color = '#ed0e64';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = '';
+                (e.currentTarget as HTMLElement).style.color = '';
+              }}
             >
               <ArrowUp className="w-4 h-4 mr-2 group-hover:animate-bounce" />
               Back to Top

@@ -48,9 +48,9 @@ export const AboutSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <ScrollAnimation animationType="fade-up" className="text-center mb-16">
-          <AnimatedText animationType="glow-pulse" className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ color: '#ed0e64' }}>
             About Script Wind
-          </AnimatedText>
+          </h2>
           <ScrollAnimation animationType="fade-up" delay={200}>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
               We're more than just a development team — we're your digital transformation partners. 
@@ -83,15 +83,15 @@ export const AboutSection = () => {
           </ScrollAnimation>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => <ScrollAnimation key={value.title} animationType="fade-up" delay={index * 150}>
-                <Card className="text-center hover-lift group hover:shadow-glow-primary/50 transition-all duration-500 hover:scale-105">
-                  <CardHeader>
+                <Card className="text-center hover-lift group hover:shadow-glow-primary/50 transition-all duration-500 hover:scale-105 h-64 flex flex-col justify-between">
+                  <CardHeader className="pb-2">
                     <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-tech-gradient flex items-center justify-center shadow-glow-primary group-hover:shadow-glow-primary/80 group-hover:scale-110 transition-all duration-300">
                       <value.icon className="w-8 h-8 text-white group-hover:animate-bounce" />
                     </div>
-                    <CardTitle className="text-xl group-hover:text-gradient transition-all duration-300">{value.title}</CardTitle>
+                    <CardTitle className="text-xl group-hover:text-primary transition-all duration-300" style={{ color: value.title === 'Precision' || value.title === 'Collaboration' || value.title === 'Innovation' || value.title === 'Growth' ? '#ed0e64' : 'inherit' }}>{value.title}</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground group-hover:text-foreground transition-all duration-300">{value.description}</p>
+                  <CardContent className="pt-0 flex-1 flex items-center">
+                    <p className="text-muted-foreground group-hover:text-foreground transition-all duration-300 leading-relaxed">{value.description}</p>
                   </CardContent>
                 </Card>
               </ScrollAnimation>)}
