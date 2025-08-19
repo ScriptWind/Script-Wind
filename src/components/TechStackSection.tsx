@@ -35,7 +35,7 @@ import DeepseekIcon from "@/assets/Tech SVGs/Deepseek.svg";
 import ClaudeIcon from "@/assets/Tech SVGs/Claude.svg";
 import CursorIcon from "@/assets/Tech SVGs/Cursor.svg";
 import OpenaiIcon from "@/assets/Tech SVGs/openai.svg";
-import PythonIcon from "@/assets/Tech SVGs/python.svg";
+import PythonIcon from "@/assets/Tech SVGs/Python.svg";
 import ReactNativeIcon from "@/assets/Tech SVGs/React Native.svg";
 
 const techCategories = [
