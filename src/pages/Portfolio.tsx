@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ExternalLink, Github, Filter } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 
 const portfolioItems = [
   {
@@ -98,124 +99,133 @@ const Portfolio = () => {
     : portfolioItems.filter(item => item.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-background pt-20">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-primary/20 to-secondary/20 py-16 mt-0">
-        <div className="max-w-7xl mx-auto px-4">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="mb-6 group"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
-          </Button>
-          
-          <h1 className="text-5xl md:text-6xl font-bold text-gradient mb-6 animate-fade-in">
-            Our Portfolio
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            Explore our complete collection of successful projects. From innovative mobile apps to 
-            enterprise-grade web solutions, discover how we turn ideas into digital reality.
-          </p>
-        </div>
-      </div>
-
-      {/* Category Filter */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-4 mb-2">
-          <Filter className="w-5 h-5 text-muted-foreground" />
-          <span className="text-sm font-medium text-muted-foreground">Filter by Category:</span>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          {categories.map((category) => (
+    <>
+      <SEO 
+        title="Portfolio | Script Wind - Our Digital Solutions & Projects"
+        description="Explore our complete collection of successful projects. From innovative mobile apps to enterprise-grade web solutions, discover how we turn ideas into digital reality."
+        keywords="Script Wind portfolio, mobile app development, web development projects, CRM systems, WordPress websites, custom software solutions, digital projects"
+        url="https://scriptwind.com/portfolio"
+        type="website"
+      />
+      <div className="min-h-screen bg-background pt-20">
+        {/* Header */}
+        <div className="bg-gradient-to-br from-primary/20 to-secondary/20 py-16 mt-0">
+          <div className="max-w-7xl mx-auto px-4">
             <Button
-              key={category}
-              variant={selectedCategory === category ? "hero" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(category)}
-              className="transition-all hover:scale-105"
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="mb-6 group"
             >
-              {category}
+              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Back to Home
             </Button>
-          ))}
+            
+            <h1 className="text-5xl md:text-6xl font-bold text-gradient mb-6 animate-fade-in">
+              Our Portfolio
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Explore our complete collection of successful projects. From innovative mobile apps to 
+              enterprise-grade web solutions, discover how we turn ideas into digital reality.
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* Portfolio Grid */}
-      <div className="max-w-7xl mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((item, index) => (
-            <Card 
-              key={item.title} 
-              className="group hover-lift cursor-pointer animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <CardContent className="p-0">
-                {/* Project Image */}
-                <div className="relative overflow-hidden rounded-t-xl">
-                  <img 
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-48 object-cover transition-smooth group-hover:scale-110"
-                  />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-90 transition-smooth flex items-center justify-center`}>
-                    <div className="flex space-x-4">
-                      <Button variant="glass" size="sm" className="text-white border-white/30">
-                        <ExternalLink className="w-4 h-4" />
-                      </Button>
-                      <Button variant="glass" size="sm" className="text-white border-white/30">
-                        <Github className="w-4 h-4" />
-                      </Button>
+        {/* Category Filter */}
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="flex items-center gap-4 mb-2">
+            <Filter className="w-5 h-5 text-muted-foreground" />
+            <span className="text-sm font-medium text-muted-foreground">Filter by Category:</span>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "hero" : "outline"}
+                size="sm"
+                onClick={() => setSelectedCategory(category)}
+                className="transition-all hover:scale-105"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Portfolio Grid */}
+        <div className="max-w-7xl mx-auto px-4 pb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((item, index) => (
+              <Card 
+                key={item.title} 
+                className="group hover-lift cursor-pointer animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-0">
+                  {/* Project Image */}
+                  <div className="relative overflow-hidden rounded-t-xl">
+                    <img 
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-48 object-cover transition-smooth group-hover:scale-110"
+                    />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-90 transition-smooth flex items-center justify-center`}>
+                      <div className="flex space-x-4">
+                        <Button variant="glass" size="sm" className="text-white border-white/30">
+                          <ExternalLink className="w-4 h-4" />
+                        </Button>
+                        <Button variant="glass" size="sm" className="text-white border-white/30">
+                          <Github className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <Badge variant="secondary" className="bg-primary/90 text-white">
+                        {item.category}
+                      </Badge>
+                    </div>
+
+                    {/* Status Badge */}
+                    <div className="absolute top-4 right-4">
+                      <Badge 
+                        variant={item.status === "Completed" ? "default" : "secondary"}
+                        className={item.status === "Completed" ? "bg-green-500" : "bg-orange-500"}
+                      >
+                        {item.status}
+                      </Badge>
                     </div>
                   </div>
-                  
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <Badge variant="secondary" className="bg-primary/90 text-white">
-                      {item.category}
-                    </Badge>
-                  </div>
 
-                  {/* Status Badge */}
-                  <div className="absolute top-4 right-4">
-                    <Badge 
-                      variant={item.status === "Completed" ? "default" : "secondary"}
-                      className={item.status === "Completed" ? "bg-green-500" : "bg-orange-500"}
-                    >
-                      {item.status}
-                    </Badge>
+                  {/* Project Content */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-gradient transition-smooth">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                      {item.description}
+                    </p>
+                    
+                    {/* Tech Stack Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="outline"
+                          className="text-xs"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
-
-                {/* Project Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-gradient transition-smooth">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {item.description}
-                  </p>
-                  
-                  {/* Tech Stack Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className="text-xs"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

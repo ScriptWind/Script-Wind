@@ -35,6 +35,8 @@ import DeepseekIcon from "@/assets/Tech SVGs/Deepseek.svg";
 import ClaudeIcon from "@/assets/Tech SVGs/Claude.svg";
 import CursorIcon from "@/assets/Tech SVGs/Cursor.svg";
 import OpenaiIcon from "@/assets/Tech SVGs/openai.svg";
+import PythonIcon from "@/assets/Tech SVGs/python.svg";
+import ReactNativeIcon from "@/assets/Tech SVGs/React Native.svg";
 
 const techCategories = [
   {
@@ -42,7 +44,8 @@ const techCategories = [
     technologies: [
       { name: "React", logo: ReactIcon },
       { name: "Next.js", logo: NextJSIcon },
-      { name: "Vue.js", logo: VueIcon }
+      { name: "Vue.js", logo: VueIcon },
+      { name: "React Native", logo: ReactNativeIcon }
     ]
   },
   {
@@ -52,7 +55,8 @@ const techCategories = [
       { name: "TypeScript", logo: TypeScriptIcon },
       { name: "HTML5", logo: HtmlIcon },
       { name: "CSS3", logo: CssIcon },
-      { name: "PHP", logo: PhpIcon }
+      { name: "PHP", logo: PhpIcon },
+      { name: "Python", logo: PythonIcon }
     ]
   },
   {
