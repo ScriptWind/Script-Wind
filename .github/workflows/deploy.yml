@@ -98,10 +98,10 @@ jobs:
           echo "test" > test-connection.txt
 
           # Test SCP with a small file first
-          if scp -o ConnectTimeout=10 -o StrictHostKeyChecking=no -P "${{ secrets.PORT }}" test-connection.txt "${{ secrets.USERNAME }}@${{ secrets.HOST }}:/Home/web/scriptwind.com/public_html/"; then
+          if scp -o ConnectTimeout=10 -o StrictHostKeyChecking=no -P "${{ secrets.PORT }}" test-connection.txt "${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/web/scriptwind.com/public_html/"; then
             echo "✅ SCP connection and permissions are working"
             # Clean up test file
-            ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no -p "${{ secrets.PORT }}" "${{ secrets.USERNAME }}@${{ secrets.HOST }}" "rm /Home/web/scriptwind.com/public_html/test-connection.txt"
+            ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no -p "${{ secrets.PORT }}" "${{ secrets.USERNAME }}@${{ secrets.HOST }}" "rm /home/web/scriptwind.com/public_html/test-connection.txt"
           else
             echo "❌ SCP connection or permissions failed"
             echo "This indicates the issue is with:"
@@ -123,7 +123,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "dist/"
-          target: "/Home/web/scriptwind.com/public_html/"
+          target: "/home/web/scriptwind.com/public_html/"
           strip_components: 0
           timeout: 60s
           command_timeout: 15m
@@ -176,7 +176,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: ".htaccess"
-          target: "/Home/web/scriptwind.com/public_html/"
+          target: "/home/web/scriptwind.com/public_html/"
           overwrite: true
 
       - name: Verify deployment
