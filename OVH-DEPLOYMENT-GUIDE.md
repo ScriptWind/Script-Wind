@@ -11,7 +11,6 @@
 
 ### 1.1 Create Production Branch
 ```bash
-# In your local project directory
 git checkout -b production
 git push -u origin production
 ```
