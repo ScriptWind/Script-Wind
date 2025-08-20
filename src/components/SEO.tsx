@@ -68,8 +68,8 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
-      <meta name="twitter:site" content="@scriptwind" />
-      <meta name="twitter:creator" content="@scriptwind" />
+      <meta name="twitter:site" content="@script_wind" />
+      <meta name="twitter:creator" content="@script_wind" />
       
       {/* Article specific meta tags */}
       {type === 'article' && publishedTime && (
@@ -86,6 +86,51 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="googlebot" content="index, follow" />
       <meta name="bingbot" content="index, follow" />
+      
+      {/* Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Script Wind",
+          "url": "https://scriptwind.com",
+          "logo": "https://scriptwind.com/First-Cover.png",
+          "description": "We build powerful digital solutions that help businesses grow. From scalable mobile apps to high-performance websites, CRM systems, and custom web applications.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "availableLanguage": "English"
+          },
+          "sameAs": [
+            "https://twitter.com/script_wind",
+            "https://www.linkedin.com/in/jude-jayathilaka",
+            "https://www.facebook.com/scriptwind",
+            "https://www.instagram.com/scriptwind",
+            "https://www.tiktok.com/@script_wind",
+            "https://www.threads.com/@scriptwind",
+            "https://www.youtube.com/@script_wind"
+          ]
+        })}
+      </script>
+      
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Script Wind",
+          "url": "https://scriptwind.com",
+          "description": "Digital solutions and development services",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://scriptwind.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        })}
+      </script>
     </Helmet>
   );
 };
