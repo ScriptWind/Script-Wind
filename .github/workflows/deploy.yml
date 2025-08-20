@@ -158,6 +158,11 @@ jobs:
       # Merge production branch back to main
       - name: Merge to Main Branch
         run: |
+          # Commit any changes (like package-lock.json updates)
+          git add -A
+          git commit -m "Update dependencies for release ${{ steps.new_version.outputs.new }}" || echo "No changes to commit"
+
+          # Now checkout main and merge
           git checkout main
           git pull origin main
           git merge production -m "Merge production branch - Release ${{ steps.new_version.outputs.new }}"
