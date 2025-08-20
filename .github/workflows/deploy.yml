@@ -11,18 +11,19 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
-
-      # - name: Run Linter (check code errors)
-      #   run: npm run lint --if-present
+        run: npm ci
 
       - name: Build React App
         run: npm run build
@@ -44,8 +45,26 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "dist/*"
+          source: "dist/"
           target: "${{ secrets.DEPLOY_PATH }}"
+          strip_components: 1
+
+      # Fix file structure if SCP creates nested folder
+      - name: Fix File Structure
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            if [ -d "dist" ]; then
+              mv dist/* dist/.* . 2>/dev/null || true
+              rmdir dist
+              echo "Fixed file structure - moved files from dist/ to root"
+            else
+              echo "No dist folder found - files are already in correct location"
+            fi
 
       # Restart web server
       - name: Restart Web Server
@@ -57,41 +76,37 @@ jobs:
           script: |
             sudo systemctl restart nginx || sudo systemctl restart apache2
 
-      # Setup Git for tagging and merging
-      - name: Setup Git
+      # Extract version from commit message
+      - name: Extract version from commit message
+        id: extract_version
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git remote set-url origin https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/${{ github.repository }}
-          git config --global --add safe.directory /github/workspace
-
-      # Extract version from commit message and create tag
-      - name: Create Tag and Release
-        id: create_tag
-        run: |
-          # Get the commit message
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-
-          # Check for semantic versioning keywords
-          if echo "$COMMIT_MSG" | grep -q "#major"; then
-            VERSION_TYPE="major"
-          elif echo "$COMMIT_MSG" | grep -q "#minor"; then
-            VERSION_TYPE="minor"
-          elif echo "$COMMIT_MSG" | grep -q "#patch"; then
-            VERSION_TYPE="patch"
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          if [[ "$COMMIT_MSG" == *"#major"* ]]; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+          elif [[ "$COMMIT_MSG" == *"#minor"* ]]; then
+            echo "bump=minor" >> $GITHUB_OUTPUT
           else
-            VERSION_TYPE="patch"  # Default to patch if no keyword found
+            echo "bump=patch" >> $GITHUB_OUTPUT
           fi
 
-          # Get current version from latest tag or start with 0.1.0
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          CURRENT_VERSION=${LATEST_TAG#v}
+      - name: Get current version
+        id: current_version
+        run: |
+          git fetch --tags
+          CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "current=$CURRENT_TAG" >> $GITHUB_OUTPUT
 
-          # Parse version components
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+      - name: Calculate new version
+        id: new_version
+        run: |
+          CURRENT="${{ steps.current_version.outputs.current }}"
+          BUMP="${{ steps.extract_version.outputs.bump }}"
 
-          # Increment version based on type
-          case $VERSION_TYPE in
+          # Remove 'v' prefix and split version
+          VERSION=${CURRENT#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          case $BUMP in
             "major")
               NEW_MAJOR=$((MAJOR + 1))
               NEW_MINOR=0
@@ -110,30 +125,30 @@ jobs:
           esac
 
           NEW_VERSION="v$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
 
-          # Create and push tag
-          git tag -a "$NEW_VERSION" -m "Release $NEW_VERSION - Deployed to production"
-          git push origin "$NEW_VERSION"
+      - name: Create and push tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag ${{ steps.new_version.outputs.new }}
+          git push origin ${{ steps.new_version.outputs.new }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 
-          # Set outputs for next steps
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "version_type=$VERSION_TYPE" >> $GITHUB_OUTPUT
-
-          echo "Created tag: $NEW_VERSION (type: $VERSION_TYPE)"
-
-            # Create GitHub Release
+      # Create GitHub Release
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         with:
-          tag_name: ${{ steps.create_tag.outputs.new_version }}
-          release_name: Release ${{ steps.create_tag.outputs.new_version }}
+          tag_name: ${{ steps.new_version.outputs.new }}
+          release_name: Release ${{ steps.new_version.outputs.new }}
           body: |
             🚀 **Production Deployment Successful!**
 
-            **Version:** ${{ steps.create_tag.outputs.new_version }}
-            **Type:** ${{ steps.create_tag.outputs.version_type }} update
+            **Version:** ${{ steps.new_version.outputs.new }}
             **Deployed:** $(date -u +"%Y-%m-%d %H:%M UTC")
 
             This release was automatically created after successful deployment to production.
@@ -143,14 +158,18 @@ jobs:
       # Merge production branch back to main
       - name: Merge to Main Branch
         run: |
-          # Checkout main branch
           git checkout main
           git pull origin main
-
-          # Merge production branch
-          git merge production -m "Merge production branch - Release ${{ steps.create_tag.outputs.new_version }}"
-
-          # Push to main
+          git merge production -m "Merge production branch - Release ${{ steps.new_version.outputs.new }}"
           git push origin main
-
           echo "Successfully merged production branch to main"
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+
+      - name: Success notification
+        run: |
+          echo "✅ Successfully completed production deployment!"
+          echo "🚀 New version: ${{ steps.new_version.outputs.new }}"
+          echo "🏷️ Tag created and pushed"
+          echo "📦 Release created"
+          echo "🔄 Merged production to main"
