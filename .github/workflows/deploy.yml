@@ -1,0 +1,180 @@
+name: CI/CD for React App
+
+on:
+  push:
+    branches:
+      - production # deploy only when production is updated
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.DEPLOY_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build React App
+        run: npm run build
+
+      # Clear old files from public_html
+      - name: Clear old files on server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            rm -rf ${{ secrets.DEPLOY_PATH }}/*
+
+      # Upload new build files
+      - name: Upload Build to OVH VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "dist/"
+          target: "${{ secrets.DEPLOY_PATH }}"
+          strip_components: 1
+
+      # Fix file structure if SCP creates nested folder
+      - name: Fix File Structure
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            if [ -d "dist" ]; then
+              mv dist/* dist/.* . 2>/dev/null || true
+              rmdir dist
+              echo "Fixed file structure - moved files from dist/ to root"
+            else
+              echo "No dist folder found - files are already in correct location"
+            fi
+
+      # Restart web server
+      - name: Restart Web Server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            sudo systemctl restart nginx || sudo systemctl restart apache2
+
+      # Extract version from commit message
+      - name: Extract version from commit message
+        id: extract_version
+        run: |
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          if [[ "$COMMIT_MSG" == *"#major"* ]]; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+          elif [[ "$COMMIT_MSG" == *"#minor"* ]]; then
+            echo "bump=minor" >> $GITHUB_OUTPUT
+          else
+            echo "bump=patch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get current version
+        id: current_version
+        run: |
+          git fetch --tags
+          CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "current=$CURRENT_TAG" >> $GITHUB_OUTPUT
+
+      - name: Calculate new version
+        id: new_version
+        run: |
+          CURRENT="${{ steps.current_version.outputs.current }}"
+          BUMP="${{ steps.extract_version.outputs.bump }}"
+
+          # Remove 'v' prefix and split version
+          VERSION=${CURRENT#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+
+          case $BUMP in
+            "major")
+              NEW_MAJOR=$((MAJOR + 1))
+              NEW_MINOR=0
+              NEW_PATCH=0
+              ;;
+            "minor")
+              NEW_MAJOR=$MAJOR
+              NEW_MINOR=$((MINOR + 1))
+              NEW_PATCH=0
+              ;;
+            "patch")
+              NEW_MAJOR=$MAJOR
+              NEW_MINOR=$MINOR
+              NEW_PATCH=$((PATCH + 1))
+              ;;
+          esac
+
+          NEW_VERSION="v$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Create and push tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag ${{ steps.new_version.outputs.new }}
+          git push origin ${{ steps.new_version.outputs.new }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+
+      # Create GitHub Release
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        with:
+          tag_name: ${{ steps.new_version.outputs.new }}
+          release_name: Release ${{ steps.new_version.outputs.new }}
+          body: |
+            🚀 **Production Deployment Successful!**
+
+            **Version:** ${{ steps.new_version.outputs.new }}
+            **Deployed:** $(date -u +"%Y-%m-%d %H:%M UTC")
+
+            This release was automatically created after successful deployment to production.
+          draft: false
+          prerelease: false
+
+      # Merge production branch back to main
+      - name: Merge to Main Branch
+        run: |
+          # Commit any changes (like package-lock.json updates)
+          git add -A
+          git commit -m "Update dependencies for release ${{ steps.new_version.outputs.new }}" || echo "No changes to commit"
+
+          # Now checkout main and merge
+          git checkout main
+          git pull origin main
+          git merge production -m "Merge production branch - Release ${{ steps.new_version.outputs.new }}"
+          git push origin main
+          echo "Successfully merged production branch to main"
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+
+      - name: Success notification
+        run: |
+          echo "✅ Successfully completed production deployment!"
+          echo "🚀 New version: ${{ steps.new_version.outputs.new }}"
+          echo "🏷️ Tag created and pushed"
+          echo "📦 Release created"
+          echo "🔄 Merged production to main"
