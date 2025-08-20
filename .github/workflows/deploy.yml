@@ -44,7 +44,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "dist/"
+          source: "dist/*"
           target: "${{ secrets.DEPLOY_PATH }}"
 
       # Restart web server
@@ -62,7 +62,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/${{ github.repository }}
+          git config --global --add safe.directory /github/workspace
 
       # Extract version from commit message and create tag
       - name: Create Tag and Release
