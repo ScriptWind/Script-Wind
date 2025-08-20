@@ -13,7 +13,7 @@ const Index = () => {
     <>
       <SEO 
         title="Script Wind - Where Ideas Catch Wind | Digital Solutions & Development"
-        description="Script Wind builds powerful digital solutions including mobile apps, WordPress websites, CRM systems, and custom web applications. Transform your business with cutting-edge technology."
+        description="Transform your business with Script Wind's expert digital solutions. We build mobile apps, WordPress websites, CRM systems & custom web applications. Get cutting-edge technology that drives growth."
         keywords="Script Wind, digital solutions, mobile apps, web development, WordPress, CRM systems, custom software, business technology, app development, website design"
         url="https://scriptwind.com"
         type="website"
