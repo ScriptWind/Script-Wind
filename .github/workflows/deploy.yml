@@ -23,9 +23,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: |
-          npm config set registry https://registry.npmjs.org/
-          npm install --no-audit --no-fund --prefer-offline
+        run: npm ci
 
       - name: Build React App
         run: npm run build
